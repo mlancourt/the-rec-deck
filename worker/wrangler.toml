@@ -1,0 +1,12 @@
+name = "rec-deck-api"
+main = "src/index.ts"
+compatibility_date = "2026-09-01"
+workers_dev = true
+
+# Created with: npx wrangler kv namespace create RESULTS
+[[kv_namespaces]]
+binding = "RESULTS"
+id = "e6256ccb33684994a13589e73c52541f"
+
+# The bearer token is a secret: npx wrangler secret put API_TOKEN --config worker/wrangler.toml
+# For `wrangler dev`, put API_TOKEN=... in worker/.dev.vars (gitignored).
