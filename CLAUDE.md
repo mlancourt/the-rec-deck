@@ -9,7 +9,8 @@ A personal game console: a static PWA "shell" hosting pluggable game "cartridges
 
 ## Stack (non-negotiable)
 - Vite + vanilla TypeScript. NO UI framework (no React/Vue/Svelte/Tailwind/shadcn). Plain DOM, CSS custom properties.
-- Dependencies: vite, typescript, vitest, wrangler, @vitest/coverage-v8. **Ask before adding any other dependency.**
+- Dependencies: vite, typescript, vitest, wrangler, @vitest/coverage-v8; runtime: chess.js, stockfish (chess cartridge only). **Ask before adding any other dependency.**
+- The Stockfish engine is not in git: `npm run engine` (run by `dev` and `build`) copies it from `node_modules` to `public/engine/`. The chess cartridge loads it as a same-origin Web Worker.
 - Static `dist/` deployed to GitHub Pages by `.github/workflows/pages.yml` on push to `main`. Custom domain `games.lannyai.com` (`public/CNAME`), `base: '/'`.
 - PWA: `public/manifest.webmanifest` + a service worker generated at build time from `src/shell/sw-template.js` (precache app shell, network-first `/api/*`, cache-first assets). Must install on iOS and play fully offline.
 - No CDNs, no external fonts, no analytics, no trackers. Self-contained assets only. The ONLY network calls the page makes are to the Worker, and only from `src/shell/api.ts`.
