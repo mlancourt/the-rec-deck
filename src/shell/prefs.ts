@@ -56,6 +56,10 @@ export function writeJSON(key: string, value: unknown): void {
   set(key, JSON.stringify(value));
 }
 
+export function removeJSON(key: string): void {
+  set(key, null);
+}
+
 export function clearAllPrefs(): void {
   try {
     for (const k of Object.keys(localStorage)) if (k.startsWith(PREFIX)) localStorage.removeItem(k);

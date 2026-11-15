@@ -43,11 +43,19 @@ export interface GameResult {
   meta?: Record<string, unknown>;
 }
 
+/** One JSON value per cartridge, kept on this device. For resume and local progress — never the scoreboard. */
+export interface SaveSlot {
+  read<T>(): T | null;
+  write(value: unknown): void;
+  clear(): void;
+}
+
 export interface CartridgeContext {
   theme: ThemeTokens;
   today: string; // Central YYYY-MM-DD
   seed: number; // stable per (id, today)
   settings: Record<string, unknown>;
+  save: SaveSlot;
   report(result: GameResult): void;
 }
 

@@ -21,6 +21,7 @@ A personal game console: a static PWA "shell" hosting pluggable game "cartridges
 ## The Cartridge Contract (`src/shell/contract.ts`)
 - A cartridge is `src/cartridges/<id>/index.ts` exporting exactly `manifest: CartridgeManifest` and `mount(el, ctx): () => void` (returns unmount).
 - A cartridge NEVER touches fetch, storage, the URL, or the DOM outside `el`. It calls `ctx.report()` once per finished game. The shell does everything else.
+- `ctx.save` is the cartridge's one save slot (`read` / `write` / `clear`, one JSON value, this device only): resume state and local progress. Never the scoreboard.
 - Registered by ONE line in `src/cartridges/_registry.ts`. `src/cartridges/contract.test.ts` checks every entry's shape and scans sources for forbidden APIs.
 - **A cartridge PR never edits `src/shell/`.** If a cartridge needs something from the shell, that's a separate shell PR first.
 

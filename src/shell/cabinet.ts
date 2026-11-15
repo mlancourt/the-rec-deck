@@ -2,7 +2,7 @@ import type { CartridgeContext, GameResult } from './contract';
 import { centralToday } from './dates';
 import { findCartridge, seedFor, submitResult } from './deck';
 import { h } from './dom';
-import { prefs } from './prefs';
+import { prefs, readJSON, removeJSON, writeJSON } from './prefs';
 import { play } from './sound';
 import { readTheme } from './theme';
 
@@ -35,6 +35,11 @@ export function renderCabinet(main: HTMLElement, id: string): () => void {
     today,
     seed: seedFor(m.id, today),
     settings: { sound: prefs.sound, reducedEffects: prefs.reducedEffects },
+    save: {
+      read: <T>() => readJSON<T>(`save.${m.id}`),
+      write: (value: unknown) => writeJSON(`save.${m.id}`, value),
+      clear: () => removeJSON(`save.${m.id}`),
+    },
     report(result: GameResult) {
       if (result.outcome === 'win') play('win');
       else if (result.outcome === 'loss') play('loss');
